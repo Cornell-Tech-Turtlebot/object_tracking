@@ -5,7 +5,10 @@ Detect object &amp; move the robot toward object
 
 1. Download & put this whole `object_tracking` folder inside the `src` folder in your catkin workspace
 
-2. Run these commands:
+2. In your `catkin_ws`, run this:
+        catkin_make
+
+3. Then run these commands:
 
         roscore
     
@@ -19,7 +22,7 @@ Detect object &amp; move the robot toward object
     
         rosrun object_tracking follow_object
     
-3. Use RViz to guide the robot to look toward the Trash Can in the House. If you don't know how to do this, follow this: https://www.oreilly.com/library/view/ros-programming-building/9781788627436/192de5c9-e5bd-40b3-a75a-2990bdfa7caf.xhtml
+4. Use RViz to guide the robot to look toward the Trash Can in the House. If you don't know how to do this, follow this: https://www.oreilly.com/library/view/ros-programming-building/9781788627436/192de5c9-e5bd-40b3-a75a-2990bdfa7caf.xhtml
 
-4. Once the robot sees the Trash Can, it will automatically move toward the Trash Can.
+5. Once the robot sees the Trash Can, it will automatically move toward the Trash Can.
     
