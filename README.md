@@ -6,6 +6,7 @@ Detect object &amp; move the robot toward object
 1. Download & put this whole `object_tracking` folder inside the `src` folder in your catkin workspace
 
 2. In your `catkin_ws`, run this:
+
         catkin_make
 
 3. Then run these commands:
