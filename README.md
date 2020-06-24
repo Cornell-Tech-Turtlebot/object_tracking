@@ -9,7 +9,7 @@ Detect object &amp; move the robot toward object
 
         catkin_make
 
-3. Then run these commands:
+3. Then run these commands, each command in a separate Terminal window:
 
         roscore
     
