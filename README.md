@@ -10,7 +10,7 @@ Detect object &amp; move the robot toward object
         chmod a+x track_object.py
         chmod a+x follow_object.py
 
-2. In your `catkin_ws`, run this:
+2. Go to your `catkin_ws`, then run this:
 
         catkin_make
 
