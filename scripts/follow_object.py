@@ -1,42 +1,56 @@
 #!/usr/bin/env python
 import rospy
 from rospy.numpy_msg import numpy_msg
-from std_msgs.msg import Float32, Float32MultiArray
+from std_msgs.msg import Float32, Float32MultiArray, Bool
 from geometry_msgs.msg import Twist
 msg=Twist()
 
-def callback(data):
-    
-    #rospy.loginfo(rospy.get_caller_id(), "I heard", data.data)
-    pub=rospy.Publisher('cmd_vel',Twist,queue_size=10)
-    #print('data',data.data[0])
-    #print('radius',data.data[0])
-    #print('center',data.data[1])
-    radius = data.data[0]
-    center_x = data.data[1]
-    center_y = data.data[2]
+OBJECT_FOUND = False
 
-    if center_x < 300:
-        msg.angular.z = 0.1
-    elif center_x > 300:
-        msg.angular.z = -0.1
-    else:
-        msg.angular.z = 0
+def pose_callback(data):
+    global OBJECT_FOUND
 
-    if(radius < 200):
-        msg.linear.x=0.5
-    else:
-        msg.linear.x=0
+    pub_velocity = rospy.Publisher('cmd_vel',Twist,queue_size=10)
+    pub_done = rospy.Publisher('follow_object_done',Bool,queue_size=1)
 
-    pub.publish(msg)
+    if OBJECT_FOUND:
+        print('Aproaching object...')
+        radius = data.data[0]
+        center_x = data.data[1]
+        center_y = data.data[2]
+
+        if center_x < 300:
+            msg.angular.z = 0.1
+        elif center_x > 300:
+            msg.angular.z = -0.1
+        else:
+            msg.angular.z = 0
+
+        if(radius < 200):
+            msg.linear.x = 0.3
+        else:
+            msg.linear.x = 0
+            pub_done.publish(True)
+            OBJECT_FOUND = False
+            print('Done!')
+
+        pub_velocity.publish(msg)
+
+
+def done_callback(data):
+    global OBJECT_FOUND
+
+    print('find_object_done callback', data.data)
+    if data.data:
+        OBJECT_FOUND = True
 
 def listener():
-
     rospy.init_node('follow_object', anonymous=True)
 
-    rospy.Subscriber('object_position', numpy_msg(Float32MultiArray), callback)
+    rospy.Subscriber('find_object_done', Bool, done_callback)
+    
+    rospy.Subscriber('object_pose', numpy_msg(Float32MultiArray), pose_callback)
 
-    # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
