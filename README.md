@@ -1,5 +1,5 @@
 # object_tracking
-Detect object &amp; move the robot toward object
+Detect object, localize object &amp; navigate the robot toward object
 
 ## How to run:
 
