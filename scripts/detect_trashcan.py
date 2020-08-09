@@ -11,7 +11,7 @@ if __name__ == '__main__':
     rospy.init_node('detect_trashcan')
 
     pose_publisher = rospy.Publisher('trashcan_pose',numpy_msg(Float32MultiArray),queue_size=1)
-    done_publisher = rospy.Publisher('trash_detected',Bool,queue_size=1)
+    done_publisher = rospy.Publisher('trashcan_detected',Bool,queue_size=1)
 
     tf_listener = tf.TransformListener()
 
