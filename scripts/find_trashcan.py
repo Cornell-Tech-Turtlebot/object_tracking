@@ -30,8 +30,6 @@ def tag_callback(data):
 def find_trashcan():
     global TRASHCAN_POSE
 
-    done_publisher = rospy.Publisher('find_trashcan_done',Bool,queue_size=1)
-
     #print('TRASHCAN_POSE',TRASHCAN_POSE)
     #print('TRASHCAN_POSE[0]', TRASHCAN_POSE[0])
     #print('TRASHCAN_POSE[1]', TRASHCAN_POSE[1])
@@ -56,8 +54,6 @@ def find_trashcan():
     result = move_to_goal(goal_x, goal_y, trashcan_q[2], trashcan_q[3])
     if result:
         print("Reached trashcan!")
-        # Tell other nodes that find_trashcan is done
-        done_publisher.publish(True)
     else:
         print("Failed to reach near trashcan.")
 
@@ -67,6 +63,7 @@ def find_trashcan():
 def approach_trashcan():
     global TRASHCAN_CENTER_POSE
 
+    done_publisher = rospy.Publisher('trashcan_approached',Bool,queue_size=1)
     velocity_publisher = rospy.Publisher('cmd_vel',Twist,queue_size=10)
     velocity_msg = Twist()
 
@@ -74,7 +71,8 @@ def approach_trashcan():
     centered_far = False
     centered_near = False
 
-    while not centered_near:
+    #while not centered_near:
+    while not reached:
         if not reached:
             rotate_speed = 0.05
         elif reached:
@@ -104,7 +102,18 @@ def approach_trashcan():
             print('Reached trashcan!')
         #break
 
-    print('Trashcan centered!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!') 
+    print('Trashcan centered!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
+    # Tell other nodes that find_trashcan is done
+    done_publisher.publish(True) 
+
+
+def state_callback(data):
+    if data.data == 4:
+        near_trashcan = find_trashcan()
+        if near_trashcan:
+            approach_trashcan()        
+
 
 def pose_listener():
 
@@ -112,11 +121,12 @@ def pose_listener():
 
     rospy.Subscriber('trashcan_pose', numpy_msg(Float32MultiArray), trashcan_callback)
     rospy.Subscriber('tag_detections', AprilTagDetectionArray, tag_callback)
+    rospy.Subscriber('/state', Float32, state_callback)
 
-    raw_input("Press Enter to start Finding Trashcan...")
-    near_trashcan = find_trashcan()
-    if near_trashcan:
-        approach_trashcan()
+    #raw_input("Press Enter to start Finding Trashcan...")
+    #near_trashcan = find_trashcan()
+    #if near_trashcan:
+    #    approach_trashcan()
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()

@@ -2,7 +2,7 @@
 import numpy as np
 import rospy
 from rospy.numpy_msg import numpy_msg
-from std_msgs.msg import Float32, Float32MultiArray
+from std_msgs.msg import Float32, Float32MultiArray, Bool
 import math
 import tf
 import geometry_msgs.msg
@@ -11,6 +11,7 @@ if __name__ == '__main__':
     rospy.init_node('detect_trashcan')
 
     pose_publisher = rospy.Publisher('trashcan_pose',numpy_msg(Float32MultiArray),queue_size=1)
+    done_publisher = rospy.Publisher('trash_detected',Bool,queue_size=1)
 
     tf_listener = tf.TransformListener()
 
@@ -24,7 +25,10 @@ if __name__ == '__main__':
         #message_array = [translate[0], translate[1], rotate[2], rotate[3]]
         message_array = translate + rotate
         message = Float32MultiArray(data = message_array)
+
         pose_publisher.publish(message)
+        done_publisher.publish(True)
+        
         print('Translation', translate)
         print('Rotate', rotate)
 
