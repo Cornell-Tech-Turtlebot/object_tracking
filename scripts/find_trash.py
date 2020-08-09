@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from rospy.numpy_msg import numpy_msg
-from std_msgs.msg import Float32, Float32MultiArray, Bool
+from std_msgs.msg import Float32, Float32MultiArray, Bool, String
 from nav_msgs.msg import Odometry
 from darknet_ros_msgs.msg import BoundingBoxes
 from set_goal import move_to_goal
@@ -13,6 +13,7 @@ import time
 ROBOT_POSE = None
 TRASH_POSE = []
 LATEST_OBJECT = None
+detect_publisher = rospy.Publisher('trash_detected',Bool,queue_size=1)
 
 #camera conversion: 1m = 1650px
 #image resolution: 640px * 480px
@@ -27,10 +28,12 @@ def odom_callback(data):
     global ROBOT_POSE
     ROBOT_POSE = data
 
+
 def trash_callback(data):
     global TRASH_POSE  
     global LATEST_OBJECT
     global ROBOT_POSE
+    global detect_publisher
 
     LATEST_OBJECT = data
     image_time = data.image_header.stamp.secs
@@ -40,6 +43,7 @@ def trash_callback(data):
         if box.Class == "bottle":
             #print('image_time',image_time)
             #print("Found bottle!")
+            detect_publisher.publish(True)
             bottle = box
             if ROBOT_POSE:
                 robot_pose = ROBOT_POSE.pose.pose
@@ -101,7 +105,7 @@ def find_trash():
 def approach_trash():
     global LATEST_OBJECT
 
-    #done_publisher = rospy.Publisher('find_trash_done',Bool,queue_size=1)
+    done_publisher = rospy.Publisher('trash_approached',Bool,queue_size=1)
     velocity_publisher = rospy.Publisher('cmd_vel',Twist,queue_size=10)
     velocity_msg = Twist()
 
@@ -173,7 +177,17 @@ def approach_trash():
             velocity_publisher.publish(velocity_msg)
             #time.sleep(5)
 
-    print('Trash centered!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')                       
+    print('Trash centered!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')  
+
+    # Tell other nodes that find_trash is done
+    done_publisher.publish(True)                      
+
+
+def state_callback(data):
+    if data.data == 'approach_trash':
+        near_trash = find_trash()
+        if near_trash:
+            approach_trash()
 
 
 def pose_listener():
@@ -184,10 +198,12 @@ def pose_listener():
 
     rospy.Subscriber('/darknet_ros/bounding_boxes', BoundingBoxes, trash_callback)
 
-    raw_input("Press Enter to find the next Trash...")
-    near_trash = find_trash()
-    if near_trash:
-        approach_trash()
+    rospy.Subscriber('/state', String, state_callback)
+
+    #raw_input("Press Enter to find the next Trash...")
+    #near_trash = find_trash()
+    #if near_trash:
+    #    approach_trash()
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()

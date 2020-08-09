@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from rospy.numpy_msg import numpy_msg
-from std_msgs.msg import Float32, Float32MultiArray, Bool
+from std_msgs.msg import Float32, Float32MultiArray, Bool, String
 from nav_msgs.msg import Odometry
 from apriltag_ros.msg import AprilTagDetectionArray
 from geometry_msgs.msg import Twist
@@ -109,7 +109,7 @@ def approach_trashcan():
 
 
 def state_callback(data):
-    if data.data == 4:
+    if data.data == 'approach_trashcan':
         near_trashcan = find_trashcan()
         if near_trashcan:
             approach_trashcan()        
@@ -121,7 +121,7 @@ def pose_listener():
 
     rospy.Subscriber('trashcan_pose', numpy_msg(Float32MultiArray), trashcan_callback)
     rospy.Subscriber('tag_detections', AprilTagDetectionArray, tag_callback)
-    rospy.Subscriber('/state', Float32, state_callback)
+    rospy.Subscriber('/state', String, state_callback)
 
     #raw_input("Press Enter to start Finding Trashcan...")
     #near_trashcan = find_trashcan()
