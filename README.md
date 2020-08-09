@@ -1,4 +1,4 @@
-# object_tracking
+# Object Tracking
 Detect object, localize object &amp; navigate the robot toward object
 
 ## How to run:
