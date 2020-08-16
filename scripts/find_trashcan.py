@@ -104,7 +104,7 @@ def approach_trashcan():
         if centered_far and not reached:
             velocity_msg.linear.x = 0.1
             velocity_publisher.publish(velocity_msg)
-            time.sleep(5)
+            time.sleep(4)
             velocity_msg.linear.x = 0
             velocity_publisher.publish(velocity_msg)
             reached = True
@@ -133,10 +133,10 @@ def pose_listener():
     rospy.Subscriber('ar_pose_marker', AlvarMarkers, ar_callback)
     rospy.Subscriber('/state', String, state_callback)
 
-    raw_input("Press Enter to start Finding Trashcan...")
-    near_trashcan = find_trashcan()
-    if near_trashcan:
-        approach_trashcan()
+    #raw_input("Press Enter to start Finding Trashcan...")
+    #near_trashcan = find_trashcan()
+    #if near_trashcan:
+    #    approach_trashcan()
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()

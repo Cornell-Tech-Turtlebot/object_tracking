@@ -200,10 +200,10 @@ def pose_listener():
 
     rospy.Subscriber('/state', String, state_callback)
 
-    #raw_input("Press Enter to find the next Trash...")
-    #near_trash = find_trash()
-    #if near_trash:
-    #    approach_trash()
+    raw_input("Press Enter to find the next Trash...")
+    near_trash = find_trash()
+    if near_trash:
+        approach_trash()
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
