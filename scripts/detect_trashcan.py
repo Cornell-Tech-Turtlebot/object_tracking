@@ -18,7 +18,8 @@ if __name__ == '__main__':
     rate = rospy.Rate(10.0)
     while not rospy.is_shutdown():
         try:
-            (translate, rotate) = tf_listener.lookupTransform('/map', '/tag_10', rospy.Time(0))
+            #(translate, rotate) = tf_listener.lookupTransform('/map', '/tag_10', rospy.Time(0))
+            (translate, rotate) = tf_listener.lookupTransform('/map', '/ar_marker_4', rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             continue
 
