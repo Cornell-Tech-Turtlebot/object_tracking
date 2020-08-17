@@ -170,7 +170,7 @@ def approach_trash():
 
         if not see_trash: #don't see trash. Rotate to find it
             print('Do not see trash! Turning around to find...')
-            velocity_msg.angular.z = 0.2
+            velocity_msg.angular.z = 0.1
             velocity_publisher.publish(velocity_msg)
             time.sleep(0.1)
             velocity_msg.angular.z = 0
