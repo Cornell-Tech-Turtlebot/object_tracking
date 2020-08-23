@@ -72,7 +72,8 @@ def find_trashcan():
 def approach_trashcan():
     global TRASHCAN_CENTER_POSE
 
-    done_publisher = rospy.Publisher('trashcan_approached',Bool,queue_size=1)
+    #done_publisher = rospy.Publisher('trashcan_approached',Bool,queue_size=1)
+    done_publisher = rospy.Publisher('state',String,queue_size=1)
     velocity_publisher = rospy.Publisher('cmd_vel',Twist,queue_size=10)
     velocity_msg = Twist()
 
@@ -114,7 +115,8 @@ def approach_trashcan():
     print('Trashcan centered!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
     # Tell other nodes that find_trashcan is done
-    done_publisher.publish(True) 
+    #done_publisher.publish(True) 
+    done_publisher.publish('approach_trashcan_done') 
 
 
 def state_callback(data):

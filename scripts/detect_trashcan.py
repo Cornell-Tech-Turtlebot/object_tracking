@@ -11,7 +11,8 @@ if __name__ == '__main__':
     rospy.init_node('detect_trashcan')
 
     pose_publisher = rospy.Publisher('trashcan_pose',numpy_msg(Float32MultiArray),queue_size=1)
-    done_publisher = rospy.Publisher('trashcan_detected',Bool,queue_size=1)
+    #done_publisher = rospy.Publisher('trashcan_detected',Bool,queue_size=1)
+    done_publisher = rospy.Publisher('state',String,queue_size=1)
 
     tf_listener = tf.TransformListener()
 
@@ -19,7 +20,8 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
         try:
             #(translate, rotate) = tf_listener.lookupTransform('/map', '/tag_10', rospy.Time(0))
-            (translate, rotate) = tf_listener.lookupTransform('/map', '/ar_marker_4', rospy.Time(0))
+            #(translate, rotate) = tf_listener.lookupTransform('/map', '/ar_marker_4', rospy.Time(0))
+            (translate, rotate) = tf_listener.lookupTransform('/map', '/ar_marker_0', rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
             continue
 
@@ -28,7 +30,8 @@ if __name__ == '__main__':
         message = Float32MultiArray(data = message_array)
 
         pose_publisher.publish(message)
-        done_publisher.publish(True)
+        #done_publisher.publish(True)
+        done_publisher.publish('trashcan_detected') 
         
         print('Translation', translate)
         print('Rotate', rotate)

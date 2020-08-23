@@ -13,7 +13,8 @@ import time
 ROBOT_POSE = None
 TRASH_POSE = []
 LATEST_OBJECT = None
-detect_publisher = rospy.Publisher('trash_detected',Bool,queue_size=1)
+#detect_publisher = rospy.Publisher('trash_detected',Bool,queue_size=1)
+detect_publisher = rospy.Publisher('state',String,queue_size=1)
 
 #camera conversion: 1m = 1650px
 #image resolution: 640px * 480px
@@ -43,11 +44,11 @@ def trash_callback(data):
         if box.Class == "bottle":
             #print('image_time',image_time)
             #print("Found bottle!")
-            detect_publisher.publish(True)
             bottle = box
             if ROBOT_POSE:
                 robot_pose = ROBOT_POSE.pose.pose
                 TRASH_POSE = [image_time, bottle, robot_pose]
+                detect_publisher.publish('trash_detected')
             break
 
 
@@ -105,7 +106,8 @@ def find_trash():
 def approach_trash():
     global LATEST_OBJECT
 
-    done_publisher = rospy.Publisher('trash_approached',Bool,queue_size=1)
+    #done_publisher = rospy.Publisher('trash_approached',Bool,queue_size=1)
+    done_publisher = rospy.Publisher('state',String,queue_size=1)
     velocity_publisher = rospy.Publisher('cmd_vel',Twist,queue_size=10)
     velocity_msg = Twist()
 
@@ -180,7 +182,8 @@ def approach_trash():
     print('Trash centered!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')  
 
     # Tell other nodes that find_trash is done
-    done_publisher.publish(True)                      
+    #done_publisher.publish(True)  
+    done_publisher.publish('approach_trash_done')                    
 
 
 def state_callback(data):
