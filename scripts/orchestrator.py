@@ -5,7 +5,7 @@ from std_msgs.msg import Float32, Float32MultiArray, Bool, String
 import time
 
 TRASH_DETECTED = False
-TRASHCAN_DETECTED = False
+#TRASHCAN_DETECTED = False
 
 def state_callback(msg):
     global TRASH_DETECTED
