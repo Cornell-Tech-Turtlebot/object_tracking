@@ -98,7 +98,7 @@ def approach_trashcan():
             centered_near = reached
 
         velocity_publisher.publish(velocity_msg)
-        time.sleep(1)
+        time.sleep(0.1)
         velocity_msg.angular.z = 0
         velocity_publisher.publish(velocity_msg)
 
