@@ -62,7 +62,7 @@ def find_trashcan():
 
     result = move_to_goal(goal_x, goal_y, trashcan_q[2], trashcan_q[3])
     if result:
-        print("Reached trashcan!")
+        print("Reached near trashcan!")
     else:
         print("Failed to reach near trashcan.")
 
@@ -88,6 +88,7 @@ def approach_trashcan():
         elif reached:
             rotate_speed = 0.05
 
+        print('TRASHCAN_CENTER_POSE', TRASHCAN_CENTER_POSE)
         if TRASHCAN_CENTER_POSE < -0.01:
             velocity_msg.angular.z = rotate_speed
         elif TRASHCAN_CENTER_POSE > 0.01:
