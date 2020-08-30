@@ -26,14 +26,14 @@ def tag_callback(data):
     for tag in detections:
         if tag.id[0] == 10:
             TRASHCAN_CENTER_POSE = tag.pose.pose.pose.position.x
-            print('TRASHCAN_CENTER_POSE',TRASHCAN_CENTER_POSE)
+            #print('TRASHCAN_CENTER_POSE',TRASHCAN_CENTER_POSE)
 
 def ar_callback(data):
     global TRASHCAN_CENTER_POSE 
     for marker in data.markers:
         if marker.id == 0:
             TRASHCAN_CENTER_POSE = marker.pose.pose.position.x
-            print('TRASHCAN_CENTER_POSE',TRASHCAN_CENTER_POSE)
+            #print('TRASHCAN_CENTER_POSE',TRASHCAN_CENTER_POSE)
 
 
 def find_trashcan():
@@ -105,7 +105,7 @@ def approach_trashcan():
         if centered_far and not reached:
             velocity_msg.linear.x = 0.1
             velocity_publisher.publish(velocity_msg)
-            time.sleep(3)
+            time.sleep(10)
             velocity_msg.linear.x = 0
             velocity_publisher.publish(velocity_msg)
             reached = True
