@@ -18,11 +18,12 @@ detect_publisher = rospy.Publisher('state',String,queue_size=1)
 
 #camera conversion: 1m = 1650px
 #image resolution: 640px * 480px
-CAMERA_METER_TO_PIXEL = 2000
-IMAGE_HEIGTH = 480
-IMAGE_WIDTH = 640
+CAMERA_METER_TO_PIXEL = 500 #2000
+IMAGE_HEIGTH = 240 #480
+IMAGE_WIDTH = 320 #640
 IMAGE_CENTER_X = IMAGE_WIDTH / 2
-TRASH_CONST = 99.0 #trash_distance_meter * trash_image_height_pixel
+TRASH_CONST = 50.0 #99.0 #trash_distance_meter * trash_image_height_pixel
+TRASH_MAX_WIDTH = 100 #200
 
 
 def odom_callback(data):
@@ -70,6 +71,7 @@ def find_trash():
     trash_length = max([trash_length_x, trash_length_y])
     print('trash_length', trash_length)
     trash_distance_m = TRASH_CONST / trash_length   #in meters
+    print('trash_distance_m', trash_distance_m)
     trash_distance_px = trash_distance_m * CAMERA_METER_TO_PIXEL   #in pixels
     print('trash_distance_px', trash_distance_px)
 
@@ -105,6 +107,7 @@ def find_trash():
 
 def approach_trash():
     global LATEST_OBJECT
+    global TRASH_MAX_WIDTH
 
     #done_publisher = rospy.Publisher('trash_approached',Bool,queue_size=1)
     done_publisher = rospy.Publisher('state',String,queue_size=1)
@@ -161,7 +164,7 @@ def approach_trash():
                     velocity_publisher.publish(velocity_msg)
 
                     if trash_centered_far and not reached_trash:
-                        if trash_length_x < 200:
+                        if trash_length_x < TRASH_MAX_WIDTH:
                             velocity_msg.linear.x = 0.05
                         else:
                             velocity_msg.linear.x = 0
