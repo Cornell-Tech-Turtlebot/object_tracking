@@ -2,7 +2,7 @@
 import numpy as np
 import rospy
 from rospy.numpy_msg import numpy_msg
-from std_msgs.msg import Float32, Float32MultiArray, Bool
+from std_msgs.msg import Float32, Float32MultiArray, Bool, String
 import math
 import tf
 import geometry_msgs.msg
