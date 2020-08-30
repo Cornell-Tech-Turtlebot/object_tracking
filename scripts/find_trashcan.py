@@ -105,8 +105,10 @@ def approach_trashcan():
 
         if centered_far and not reached:
             velocity_msg.linear.x = 1
-            velocity_publisher.publish(velocity_msg)
-            time.sleep(10)
+            start_time = time.time()
+            while (time.time() - start_time) < 10:
+                velocity_publisher.publish(velocity_msg)
+            #time.sleep(10)
             velocity_msg.linear.x = 0
             velocity_publisher.publish(velocity_msg)
             reached = True
