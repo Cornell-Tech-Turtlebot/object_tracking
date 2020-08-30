@@ -31,7 +31,7 @@ def tag_callback(data):
 def ar_callback(data):
     global TRASHCAN_CENTER_POSE 
     for marker in data.markers:
-        if marker.id == 4:
+        if marker.id == 0:
             TRASHCAN_CENTER_POSE = marker.pose.pose.position.x
             print('TRASHCAN_CENTER_POSE',TRASHCAN_CENTER_POSE)
 
