@@ -55,8 +55,8 @@ def find_trashcan():
     trashcan_q = quaternion_from_euler(roll, pitch, yaw)
     
     # set goal in front of trashcan, instead of at the trash can itself
-    goal_x = TRASHCAN_POSE[0] - 0.40*cos(yaw)
-    goal_y = TRASHCAN_POSE[1] - 0.40*sin(yaw)
+    goal_x = TRASHCAN_POSE[0] - 0.41*cos(yaw)
+    goal_y = TRASHCAN_POSE[1] - 0.41*sin(yaw)
     print('goal_x', goal_x)
     print('goal_y', goal_y)
 
