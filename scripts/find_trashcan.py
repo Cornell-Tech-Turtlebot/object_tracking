@@ -108,8 +108,8 @@ def approach_trashcan():
             #velocity_publisher.publish(velocity_msg)
             #start_time = time.time()
             start_time = rospy.Time.now().secs
-            #while (time.time() - start_time) < 3:
-            while (rospy.Time.now().secs - start_time) < 2.25:
+            #while (time.time() - start_time) < 2:
+            while (rospy.Time.now().secs - start_time) < 2:
                 #print('approaching...', time.time())
                 velocity_publisher.publish(velocity_msg)
             #time.sleep(10)
