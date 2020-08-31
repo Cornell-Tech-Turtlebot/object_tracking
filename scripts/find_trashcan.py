@@ -55,8 +55,8 @@ def find_trashcan():
     trashcan_q = quaternion_from_euler(roll, pitch, yaw)
     
     # set goal in front of trashcan, instead of at the trash can itself
-    goal_x = TRASHCAN_POSE[0] - 0.41*cos(yaw)
-    goal_y = TRASHCAN_POSE[1] - 0.41*sin(yaw)
+    goal_x = TRASHCAN_POSE[0] - 0.42*cos(yaw)
+    goal_y = TRASHCAN_POSE[1] - 0.42*sin(yaw)
     print('goal_x', goal_x)
     print('goal_y', goal_y)
 
@@ -89,9 +89,9 @@ def approach_trashcan():
             rotate_speed = 0.05
 
         print('TRASHCAN_CENTER_POSE', TRASHCAN_CENTER_POSE)
-        if TRASHCAN_CENTER_POSE < 0.185: #-0.01:
+        if TRASHCAN_CENTER_POSE < 0.186: #-0.01:
             velocity_msg.angular.z = rotate_speed
-        elif TRASHCAN_CENTER_POSE > 0.189: #0.01:
+        elif TRASHCAN_CENTER_POSE > 0.188: #0.01:
             velocity_msg.angular.z = -rotate_speed
         else:
             velocity_msg.angular.z = 0  
