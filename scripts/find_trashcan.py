@@ -105,12 +105,13 @@ def approach_trashcan():
 
         if centered_far and not reached:
             velocity_msg.linear.x = 0.1
-            velocity_publisher.publish(velocity_msg)
+            #velocity_publisher.publish(velocity_msg)
             #start_time = time.time()
             start_time = rospy.Time.now().secs
-            #while (time.time() - start_time) < 1:
-            while (rospy.Time.now().secs - start_time) < 2:
-                print('approaching...', time.time())
+            while (time.time() - start_time) < 1:
+            #while (rospy.Time.now().secs - start_time) < 2:
+                #print('approaching...', time.time())
+                velocity_publisher.publish(velocity_msg)
             #time.sleep(10)
             velocity_msg.linear.x = 0
             velocity_publisher.publish(velocity_msg)
