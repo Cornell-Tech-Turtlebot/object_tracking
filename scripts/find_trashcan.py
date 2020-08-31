@@ -89,9 +89,9 @@ def approach_trashcan():
             rotate_speed = 0.05
 
         print('TRASHCAN_CENTER_POSE', TRASHCAN_CENTER_POSE)
-        if TRASHCAN_CENTER_POSE < 0.185#-0.01:
+        if TRASHCAN_CENTER_POSE < 0.185: #-0.01:
             velocity_msg.angular.z = rotate_speed
-        elif TRASHCAN_CENTER_POSE > 0.189#0.01:
+        elif TRASHCAN_CENTER_POSE > 0.189: #0.01:
             velocity_msg.angular.z = -rotate_speed
         else:
             velocity_msg.angular.z = 0  
