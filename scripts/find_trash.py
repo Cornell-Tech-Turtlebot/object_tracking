@@ -20,7 +20,7 @@ detect_publisher = rospy.Publisher('state',String,queue_size=1)
 #image resolution: 640px * 480px
 CAMERA_METER_TO_PIXEL = 2000 #500 #2000
 IMAGE_HEIGTH = 480 #240 #480
-IMAGE_WIDTH = 320 #320 #640
+IMAGE_WIDTH = 640 #320 #640
 IMAGE_CENTER_X = IMAGE_WIDTH / 2
 TRASH_CONST = 99.0 #50.0 #99.0 #trash_distance_meter * trash_image_height_pixel
 TRASH_MAX_WIDTH = 200 #100 #200
