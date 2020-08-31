@@ -89,9 +89,9 @@ def approach_trashcan():
             rotate_speed = 0.05
 
         print('TRASHCAN_CENTER_POSE', TRASHCAN_CENTER_POSE)
-        if TRASHCAN_CENTER_POSE < -0.01:
+        if TRASHCAN_CENTER_POSE < #-0.01:
             velocity_msg.angular.z = rotate_speed
-        elif TRASHCAN_CENTER_POSE > 0.01:
+        elif TRASHCAN_CENTER_POSE > #0.01:
             velocity_msg.angular.z = -rotate_speed
         else:
             velocity_msg.angular.z = 0  
@@ -109,7 +109,7 @@ def approach_trashcan():
             #start_time = time.time()
             start_time = rospy.Time.now().secs
             #while (time.time() - start_time) < 3:
-            while (rospy.Time.now().secs - start_time) < 2:
+            while (rospy.Time.now().secs - start_time) < 2.25:
                 #print('approaching...', time.time())
                 velocity_publisher.publish(velocity_msg)
             #time.sleep(10)
