@@ -55,8 +55,8 @@ def find_trashcan():
     trashcan_q = quaternion_from_euler(roll, pitch, yaw)
     
     # set goal in front of trashcan, instead of at the trash can itself
-    goal_x = TRASHCAN_POSE[0] - 0.42*cos(yaw)
-    goal_y = TRASHCAN_POSE[1] - 0.42*sin(yaw)
+    goal_x = TRASHCAN_POSE[0] - 0.4*cos(yaw)
+    goal_y = TRASHCAN_POSE[1] - 0.4*sin(yaw)
     print('goal_x', goal_x)
     print('goal_y', goal_y)
 
@@ -109,7 +109,7 @@ def approach_trashcan():
             #start_time = time.time()
             start_time = rospy.Time.now().secs
             #while (time.time() - start_time) < 2:
-            while (rospy.Time.now().secs - start_time) < 2:
+            while (rospy.Time.now().secs - start_time) < 1:
                 #print('approaching...', time.time())
                 velocity_publisher.publish(velocity_msg)
             #time.sleep(10)
