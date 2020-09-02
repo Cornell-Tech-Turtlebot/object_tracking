@@ -23,7 +23,7 @@ IMAGE_HEIGTH = 480 #240 #480
 IMAGE_WIDTH = 640 #320 #640
 IMAGE_CENTER_X = IMAGE_WIDTH / 2
 TRASH_CONST = 99.0 #50.0 #99.0 #trash_distance_meter * trash_image_height_pixel
-TRASH_MAX_WIDTH = 240 #100 #200
+TRASH_MAX_WIDTH = 200 #100 #200
 
 
 def odom_callback(data):
